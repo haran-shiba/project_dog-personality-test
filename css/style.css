@@ -37,4 +37,78 @@ body{
     white-space: nowrap;
 }
 
-/* test */
+/* question */
+#question-screen{
+    display: flex;
+    flex-direction:column;
+    align-items:center;   
+}
+
+.question-count{
+    text-align:center;
+    font-size:40px;
+    font-weight:bold;
+    margin:0 0 20px;
+}
+
+.progress-bar{
+    width: 500px;
+    height: 20px;
+    background-color: #D9D9D9;
+    margin: 30px auto;
+    overflow: hidden;
+}
+
+.progress{
+    width: 4%;
+    height: 100%;
+    background-color: #F6C65B;
+}
+
+.question-decoration-img{
+    position: absolute;
+    right: 30px; 
+    bottom: 30px; 
+    width: 100px; 
+}
+
+.question-text{
+    text-align:center;
+    font-size:36px;
+    margin:100px 0 8%;
+}
+
+.answer-btn-wrap{
+    display:flex;
+    gap: 120px;
+}
+
+.answer-btn{
+    align-items: center;
+    width: 220px;
+    display: block;
+    cursor: pointer;
+    transform: translateY(5px);
+    position: relative;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;   
+}
+
+.answer-btn-img{
+    width:180px;
+}
+
+.answer-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+
+}
+
+
+
+
