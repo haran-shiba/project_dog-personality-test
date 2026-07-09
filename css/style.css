@@ -1,18 +1,22 @@
 body{
     margin:0;
-    background-color:#F5EACA;
 }
 
+/* 共通 */
 .screen{
     min-height:100vh;
+    background-color:#F5EACA;
 
+}
+
+/* TOP */
+#top-screen{
     display:flex;
     flex-direction:column;
-
     justify-content:center;
     align-items:center;
-
     text-align:center;
+    gap:3px;
 }
 
 .start-btn-wrap{
@@ -32,3 +36,5 @@ body{
     pointer-events: none;
     white-space: nowrap;
 }
+
+/* test */
