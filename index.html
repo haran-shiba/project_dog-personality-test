@@ -37,12 +37,12 @@
 
         <div class="answer-btn-wrap">
             <button class="answer-btn" id="yes-btn">
-                <img src="dog-images/btnyes.svg" alt="">
+                <img src="dog-images/btnyes.svg" alt="ボタン" class=".answer-btn-img">
                 <span class="answer-text">はい</span>
             </button>
 
             <button class="answer-btn" id="no-btn">
-                <img src="dog-images/btnyes.svg" alt="">
+                <img src="dog-images/btnyes.svg" alt="ボタン" class=".answer-btn-img">
                 <span class="answer-text">いいえ</span>
             </button>
         </div>
@@ -50,6 +50,76 @@
         <img src="dog-images/testdeco.svg" alt="骨の画像" class="question-decoration-img">
     </div>
 
+<!-- loading -->
+    <div id="loading-screen" class="screen">
+        <div class="loading">
+            <p>わんこを呼び出し中...</p>
+            <img src="dog-images/bunsekiTEXT.svg">
+        </div>
+        
+        <img src="dog-images/bunseki.svg" class="bunseki-img">
+    </div> 
+
+<!-- result -->
+    <div id="result-screen" class="screen">
+        <div class="result-main">
+            <div class="dog-img">
+                <img src="dog-images/shibainu.jpg" class="result-dog-img">
+            <!--
+                <img src="dog-images/husky.jpg" class="result-dog-img">
+                <img src="dog-images/pome.jpg" class="result-dog-img">
+                <img src="dog-images/toypoodle.jpg" class="result-dog-img">
+                <img src="dog-images/labrador.jpg" class="result-dog-img">
+            -->
+            </div>
+        
+            <div class="result-content">
+                <div class="result-title">
+                    <img src="dog-images/kekkatitle-icon.svg">
+                    <h1>主導権は我にあり、マイペース王</h1>
+                </div>
+
+                <div class="result-text">
+                    <img src="dog-images/kekkaTEXT frame.svg" class="result-text-fram">
+                    <div src="result-text-content">
+                        <h3>あなたは柴犬タイプ。</h3>
+                        <p>周りに流されず、自分のペースを大切にするタイプです。<br>
+                            基本気分屋で相手から来られるより、自分から行くのを好み、<br>
+                            一人の時間は好きだけど、本当のひとりぼっちは少し寂しい。<br>
+                            そんな天邪鬼な一面を持っています。<br>
+                            でも信頼した相手にはかなり一途です。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="result-point">
+                    <h3>ちなみに本物の柴犬は、</h3>
+
+                    <img src="dog-images/Rectangle 26.png">
+                    <p>換毛期になると分身ができるレベルで毛が抜けます。<br>
+                        掃除機との戦いが始まる季節とも言われています。
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="result-btns">
+            <button class="result-btn" id="retry-btn">
+                <img src="dog-images/kekkaBTN.svg">
+                <span>もう一度診断する</span>
+            </button>
+
+            <button class="result-btn" id="share-btn">
+                <i class="fa-brands fa-line"></i>
+                <span>シェアする</span>
+            </button>
+
+            <button class="result-btn" id="save-btn">
+                <img src="dog-images/kekkaBTN2.svg">
+                <span>結果を保存する</span>
+            </button>
+        </div>
+            
 </div>
 
 
