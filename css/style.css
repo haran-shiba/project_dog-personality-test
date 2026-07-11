@@ -166,6 +166,35 @@ body{
     text-align: center;
 }
 
+.result-text{
+    position: relative;
+}
+
+.result-text-fram{
+    width: 100%;
+    display: block;
+}
+
+.result-text-content{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width:80%
+}
+
+.result-point{
+    position: relative;
+}
+
+.result-point-text{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width:80%;
+}
+
 .result-btns{
     display: flex;
     justify-content: center;
@@ -173,3 +202,41 @@ body{
     width: 100%;
     margin-top: 35px;
 }
+
+.result-btn{
+    display: flex;
+    border-radius: 50px;
+    border:2px solid #000;
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    width:250px;
+    height:50px;
+    font-size:15px;
+    cursor: pointer;
+}
+
+.result-btn img{
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.result-btn i{
+    font-size:30px;
+    flex-shrink: 0;
+}
+
+.result-btn span{
+    white-space: nowrap;
+}
+
+
+
+
+
+
+
+
