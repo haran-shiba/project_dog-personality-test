@@ -135,8 +135,9 @@ body{
 
 /* result */
 #result-screen{
-    padding:40px 30px;
+    padding:100px 30px;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .result-main{
@@ -150,8 +151,9 @@ body{
 }
 
 .dog-img{
-    width:500px;
-    flex-shrink: 0;
+    width:40%;
+    max-width:500px;
+    min-width: 0;
 }
 
 .result-dog-img{
@@ -162,26 +164,31 @@ body{
 
 
 .result-content{
-    width: 700px;
-    flex-shrink: 0;
+    width: 60%;
+    max-width: 700px;
+    min-width: 0;
 
 }
 
 .result-title{
     display: flex;
-    gap:30px;
-    text-align: center;
+    gap: 10px;
+    align-items: center;
 }
+
 .result-title h1{
-    white-space: nowrap;
+    margin: 0;
+    line-height: 1.3;
+    font-size: clamp(24px, 3vw, 42px);
 }
+
 .result-title img{
-    font-size:100px;
+    width: 50px;px;
 }
 
 .result-text{
     position: relative;
-    width:700px;
+    width:100%;
 }
 
 .result-text-frame{
@@ -194,10 +201,20 @@ body{
     position: absolute;
     top:50%;
     left:50%;
-    right:50px;
     transform: translate(-50%,-50%);
     width:80%
 }
+
+.result-text-content h3{
+    margin: 0 0 20px;
+    font-size: clamp(18px, 2vw, 24px);}
+
+.result-text-content p{
+    margin: 0;
+    font-size: clamp(14px, 1.4vw, 18px);
+    line-height: 1.6;
+}
+
 
 .result-point{
     width: 100%;
@@ -206,6 +223,7 @@ body{
 
 .result-point h3{
     margin: 0 0 10px;
+    font-size: clamp(18px, 2vw, 24px);
 }
 
 .result-point-box{
@@ -222,45 +240,35 @@ body{
 .result-point-box p{
     position: absolute;
     top: 50%;
-    left: 40px;
-    right: 40px;
+    left: 5%;
+    right: 5%;
     transform: translateY(-50%);
     margin: 0;
-    font-size: 17px;
+    font-size: clamp(13px, 1.3vw, 17px);
     line-height: 1.5;
 }
 
-.result-text-content h3{
-    margin: 0 0 24px;
-    font-size: 24px;
-}
-
-.result-text-content p{
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.6;
-}
 
 
 .result-btns{
     display: flex;
-    justify-content: space-between;
-    gap: 50px;
+    justify-content: center;
+    gap: 40px;
     width: 100%;
     max-width: 1400px;
     margin: 35px auto 0;
 }
 
 .result-btn{
+    width:300px;
+    height:50px;
     display: flex;
-    border-radius: 50px;
-    border:2px solid #000;
-    background-color: #fff;
     justify-content: center;
     align-items: center;
     gap:10px;
-    width:250px;
-    height:50px;
+    border-radius: 50px;
+    border:2px solid #000;
+    background-color: #fff;
     font-size:15px;
     cursor: pointer;
 }
