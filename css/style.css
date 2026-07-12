@@ -135,6 +135,7 @@ body{
 
 /* result */
 #result-screen{
+    padding:40px 30px;
     box-sizing: border-box;
 }
 
@@ -144,10 +145,13 @@ body{
     justify-content: center;
     gap:50px;
     width:100%;
+    max-width:1400px;
+    margin:0 auto;
 }
 
 .dog-img{
-    width:35%;
+    width:500px;
+    flex-shrink: 0;
 }
 
 .result-dog-img{
@@ -156,8 +160,11 @@ body{
     height:auto;
 }
 
+
 .result-content{
-    width: 55%;
+    width: 700px;
+    flex-shrink: 0;
+
 }
 
 .result-title{
@@ -165,13 +172,21 @@ body{
     gap:30px;
     text-align: center;
 }
+.result-title h1{
+    white-space: nowrap;
+}
+.result-title img{
+    font-size:100px;
+}
 
 .result-text{
     position: relative;
+    width:700px;
 }
 
-.result-text-fram{
+.result-text-frame{
     width: 100%;
+    height: auto;
     display: block;
 }
 
@@ -179,28 +194,61 @@ body{
     position: absolute;
     top:50%;
     left:50%;
+    right:50px;
     transform: translate(-50%,-50%);
     width:80%
 }
 
 .result-point{
-    position: relative;
+    width: 100%;
+    margin-top: 20px;    
 }
 
-.result-point-text{
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    width:80%;
+.result-point h3{
+    margin: 0 0 10px;
 }
+
+.result-point-box{
+    position: relative;
+    width: 100%;
+}
+
+.result-point-box img{
+    display: block;
+    width: 100%;
+    height:auto;
+}
+
+.result-point-box p{
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    right: 40px;
+    transform: translateY(-50%);
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.result-text-content h3{
+    margin: 0 0 24px;
+    font-size: 24px;
+}
+
+.result-text-content p{
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
 
 .result-btns{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 50px;
     width: 100%;
-    margin-top: 35px;
+    max-width: 1400px;
+    margin: 35px auto 0;
 }
 
 .result-btn{
