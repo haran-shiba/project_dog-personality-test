@@ -197,6 +197,15 @@ const noBtn = document.getElementById("no-btn");
 
 let currentQuestionIndex = 0;
 
+// 犬種ごとの得点を入れておく箱(最初は全部0点)
+const scores = {
+    shiba: 0,
+    husky: 0,
+    pome: 0,
+    toypoo: 0,
+    golden: 0
+};
+
 function showQuestion() {
     const currentQuestion = questions[currentQuestionIndex];
 
@@ -204,6 +213,12 @@ function showQuestion() {
 
     questionCount.textContent =
         `Q${currentQuestion.id} / ${questions.length}`;
+}
+
+// 今表示している質問の犬種(type)に、その質問のポイント(point)を加算する
+function addScore() {
+    const currentQuestion = questions[currentQuestionIndex];
+    scores[currentQuestion.type] += currentQuestion.point;
 }
 
 function nextQuestion() {
@@ -215,6 +230,7 @@ function nextQuestion() {
 }
 
 yesBtn.addEventListener("click", function() {
+    addScore();
     nextQuestion();
 });
 
