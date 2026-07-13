@@ -75,7 +75,7 @@ body{
 
 .question-text{
     text-align:center;
-    font-size:36px;
+    font-size:25px;
     margin:100px 0 8%;
 }
 
@@ -130,6 +130,19 @@ body{
 .bunseki-img{
     margin-top: 20px;
     width:180px;
+}
+
+/* 左右に揺れるアニメーション */
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-8px); }
+    50%  { transform: translateX(0); }
+    75%  { transform: translateX(8px); }
+    100% { transform: translateX(0); }
+}
+
+.shake-wrap{
+    animation: shake 1.0s infinite;
 }
 
 

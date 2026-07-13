@@ -2,6 +2,7 @@ console.log("JavaScript connected");
 const topScreen = document.getElementById("top-screen");
 const questionScreen = document.getElementById("question-screen");
 const loadingScreen = document.getElementById("loading-screen");
+const resultScreen = document.getElementById("result-screen");
 const startButton = document.getElementById("start-btn");
 
 startButton.addEventListener("click", function(){
@@ -236,6 +237,15 @@ function nextQuestion() {
 function finishQuiz() {
     questionScreen.style.display = "none";
     loadingScreen.style.display = "flex";
+
+    // 5000ミリ秒(5秒)後に showResultScreen を実行する
+    setTimeout(showResultScreen, 5000);
+}
+
+// ローディング画面を隠して、結果画面を表示する
+function showResultScreen() {
+    loadingScreen.style.display = "none";
+    resultScreen.style.display = "block";
 }
 
 yesBtn.addEventListener("click", function() {
