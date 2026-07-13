@@ -189,3 +189,37 @@ type:"golden",
 point:2
 }
 ];
+
+const questionText = document.getElementById("questionText");
+const questionCount = document.getElementById("questionCount");
+const yesBtn = document.getElementById("yes-btn");
+const noBtn = document.getElementById("no-btn");
+
+let currentQuestionIndex = 0;
+
+function showQuestion() {
+    const currentQuestion = questions[currentQuestionIndex];
+
+    questionText.textContent = currentQuestion.text;
+
+    questionCount.textContent =
+        `Q${currentQuestion.id} / ${questions.length}`;
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+    }
+}
+
+yesBtn.addEventListener("click", function() {
+    nextQuestion();
+});
+
+noBtn.addEventListener("click", function() {
+    nextQuestion();
+});
+
+showQuestion();
