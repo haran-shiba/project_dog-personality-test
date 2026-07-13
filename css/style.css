@@ -39,7 +39,7 @@ body{
 
 /* question */
 #question-screen{
-    display: flex;
+    display: none;
     flex-direction:column;
     align-items:center;  
     position: relative; 
@@ -114,7 +114,7 @@ body{
 
 /* loading */
 #loading-screen{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content:center;
@@ -135,6 +135,7 @@ body{
 
 /* result */
 #result-screen{
+    display: none;
     padding:100px 30px;
     box-sizing: border-box;
     overflow-x: hidden;
