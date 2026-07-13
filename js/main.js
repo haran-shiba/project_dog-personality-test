@@ -1,6 +1,7 @@
 console.log("JavaScript connected");
 const topScreen = document.getElementById("top-screen");
 const questionScreen = document.getElementById("question-screen");
+const loadingScreen = document.getElementById("loading-screen");
 const startButton = document.getElementById("start-btn");
 
 startButton.addEventListener("click", function(){
@@ -226,7 +227,15 @@ function nextQuestion() {
 
     if (currentQuestionIndex < questions.length) {
         showQuestion();
+    } else {
+        finishQuiz();
     }
+}
+
+// 質問が全部終わったら、質問画面を隠してローディング画面を表示する
+function finishQuiz() {
+    questionScreen.style.display = "none";
+    loadingScreen.style.display = "flex";
 }
 
 yesBtn.addEventListener("click", function() {
