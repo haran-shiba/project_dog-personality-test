@@ -197,6 +197,7 @@ const questionCount = document.getElementById("questionCount");
 const progressBar = document.querySelector(".progress");
 const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
+const loadingText = document.getElementById("loadingText");
 
 const resultDogImg = document.getElementById("resultDogImg");
 const resultTitle = document.getElementById("resultTitle");
@@ -314,8 +315,23 @@ function finishQuiz() {
     questionScreen.style.display = "none";
     loadingScreen.style.display = "flex";
 
-    // 5000ミリ秒(5秒)後に showResultScreen を実行する
-    setTimeout(showResultScreen, 5000);
+    // 1秒ごとに「...」を1つずつ増やし、3つになったら結果画面に切り替える
+    let dotCount = 0;
+    loadingText.textContent = "わんこを呼び出し中";
+
+    const dotInterval = setInterval(function() {
+        dotCount++;
+
+        loadingText.textContent =
+            "わんこを呼び出し中" + ".".repeat(dotCount);
+
+        if (dotCount >= 3) {
+            clearInterval(dotInterval);
+            setTimeout(function() {
+                showResultScreen();
+            }, 1000);
+        }
+    }, 1000);
 }
 
 // ローディング画面を隠して、結果画面を表示する
@@ -377,7 +393,12 @@ saveBtn.addEventListener("click", function() {
         const link = document.createElement("a");
         link.download = "dog-result.png";
         link.href = canvas.toDataURL("image/png");
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
+    }).catch(function(error) {
+        console.error(error);
+        alert("画像の保存に失敗しました");
     });
 });
 

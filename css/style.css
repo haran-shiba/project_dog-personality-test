@@ -96,11 +96,16 @@ body{
     display: block;
     cursor: pointer;
     transform: translateY(5px);
+    transition: transform 0.1s ease;
     position: relative;
     border: none;
     background: none;
     padding: 0;
     cursor: pointer;
+}
+
+.answer-btn:active{
+    transform: translateY(10px);
 }
 
 .answer-btn-img{
@@ -139,18 +144,6 @@ body{
     width:180px;
 }
 
-/* 左右に揺れるアニメーション */
-@keyframes shake {
-    0%   { transform: translateX(0); }
-    25%  { transform: translateX(-8px); }
-    50%  { transform: translateX(0); }
-    75%  { transform: translateX(8px); }
-    100% { transform: translateX(0); }
-}
-
-.shake-wrap{
-    animation: shake 1.0s infinite;
-}
 
 
 /* result */
@@ -303,6 +296,12 @@ body{
     background-color: #fff;
     font-size:13px;
     cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.result-btn:active{
+    transform: translateY(5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
 }
 
 .result-btn img{
