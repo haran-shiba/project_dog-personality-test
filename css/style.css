@@ -37,7 +37,7 @@ body{
     transform: translate(-50%, -50%);
     margin: 0;
     color: #fff;
-    font-size: 32px;
+    font-size: 25px;
     font-weight: bold;
     pointer-events: none;
     white-space: nowrap;
@@ -156,55 +156,65 @@ body{
 /* result */
 #result-screen{
     display: none;
-    padding:100px 30px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 16px 30px;
     box-sizing: border-box;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .result-main{
     display: flex;
     align-items: center;
     justify-content: center;
-    gap:50px;
+    gap:30px;
     width:100%;
-    max-width:1400px;
+    max-width:1200px;
     margin:0 auto;
+    min-height: 0;
 }
 
 .dog-img{
-    width:40%;
-    max-width:500px;
+    width:32%;
+    max-width:300px;
     min-width: 0;
+    display: flex;
+    justify-content: center;
 }
 
 .result-dog-img{
     display: block;
-    width:100%;
-    height:auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 55vh;
+    border-radius: 12px;
 }
 
 
 .result-content{
     width: 60%;
-    max-width: 700px;
+    max-width: 580px;
     min-width: 0;
 
 }
 
 .result-title{
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
 }
 
 .result-title h1{
     margin: 0;
     line-height: 1.3;
-    font-size: clamp(24px, 3vw, 42px);
+    font-size: clamp(18px, 2.2vw, 26px);
 }
 
 .result-title img{
-    width: 50px;px;
+    width: 36px;
 }
 
 .result-text{
@@ -227,24 +237,24 @@ body{
 }
 
 .result-text-content h3{
-    margin: 0 0 20px;
-    font-size: clamp(18px, 2vw, 24px);}
+    margin: 0 0 10px;
+    font-size: clamp(14px, 1.6vw, 19px);}
 
 .result-text-content p{
     margin: 0;
-    font-size: clamp(14px, 1.4vw, 18px);
-    line-height: 1.6;
+    font-size: clamp(11px, 1.15vw, 14px);
+    line-height: 1.5;
 }
 
 
 .result-point{
     width: 100%;
-    margin-top: 20px;    
+    margin-top: 10px;
 }
 
 .result-point h3{
-    margin: 0 0 10px;
-    font-size: clamp(18px, 2vw, 24px);
+    margin: 0 0 6px;
+    font-size: clamp(14px, 1.6vw, 19px);
 }
 
 .result-point-box{
@@ -265,8 +275,8 @@ body{
     right: 5%;
     transform: translateY(-50%);
     margin: 0;
-    font-size: clamp(13px, 1.3vw, 17px);
-    line-height: 1.5;
+    font-size: clamp(10px, 1vw, 13px);
+    line-height: 1.3;
 }
 
 
@@ -274,15 +284,16 @@ body{
 .result-btns{
     display: flex;
     justify-content: center;
-    gap: 40px;
+    gap: 24px;
     width: 100%;
     max-width: 1400px;
-    margin: 35px auto 0;
+    margin: 14px auto 0;
+    flex-shrink: 0;
 }
 
 .result-btn{
-    width:300px;
-    height:50px;
+    width:240px;
+    height:42px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -290,19 +301,19 @@ body{
     border-radius: 50px;
     border:2px solid #000;
     background-color: #fff;
-    font-size:15px;
+    font-size:13px;
     cursor: pointer;
 }
 
 .result-btn img{
-    width: 35px;
-    height: 35px;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
     flex-shrink: 0;
 }
 
 .result-btn i{
-    font-size:30px;
+    font-size:24px;
     flex-shrink: 0;
 }
 

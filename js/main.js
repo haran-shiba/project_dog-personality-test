@@ -205,6 +205,10 @@ const resultDescription = document.getElementById("resultDescription");
 const resultPointTitle = document.getElementById("resultPointTitle");
 const resultPointText = document.getElementById("resultPointText");
 
+const retryBtn = document.getElementById("retry-btn");
+const shareBtn = document.getElementById("share-btn");
+const saveBtn = document.getElementById("save-btn");
+
 // 犬種ごとの結果画面に表示する内容
 const resultData = {
     shiba: {
@@ -317,7 +321,7 @@ function finishQuiz() {
 // ローディング画面を隠して、結果画面を表示する
 function showResultScreen() {
     loadingScreen.style.display = "none";
-    resultScreen.style.display = "block";
+    resultScreen.style.display = "flex";
 
     const winner = determineResult();
     const data = resultData[winner];
@@ -337,6 +341,44 @@ yesBtn.addEventListener("click", function() {
 
 noBtn.addEventListener("click", function() {
     nextQuestion();
+});
+
+// もう一度診断する：状態をリセットしてTOP画面に戻る
+retryBtn.addEventListener("click", function() {
+    currentQuestionIndex = 0;
+    for (const type in scores) {
+        scores[type] = 0;
+    }
+    showQuestion();
+
+    resultScreen.style.display = "none";
+    topScreen.style.display = "flex";
+});
+
+// シェアする：Web Share APIで診断結果タイトルとURLを共有、非対応ブラウザではURLをコピー
+shareBtn.addEventListener("click", function() {
+    const shareData = {
+        title: resultTitle.textContent,
+        url: window.location.href
+    };
+
+    if (navigator.share) {
+        navigator.share(shareData).catch(function() {});
+    } else {
+        navigator.clipboard.writeText(shareData.url).then(function() {
+            alert("URLをコピーしました");
+        });
+    }
+});
+
+// 結果を保存する：result-mainをキャプチャして画像として保存
+saveBtn.addEventListener("click", function() {
+    html2canvas(document.querySelector(".result-main")).then(function(canvas) {
+        const link = document.createElement("a");
+        link.download = "dog-result.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    });
 });
 
 showQuestion();
