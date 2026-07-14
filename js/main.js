@@ -198,6 +198,74 @@ const progressBar = document.querySelector(".progress");
 const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 
+const resultDogImg = document.getElementById("resultDogImg");
+const resultTitle = document.getElementById("resultTitle");
+const resultSubtitle = document.getElementById("resultSubtitle");
+const resultDescription = document.getElementById("resultDescription");
+const resultPointTitle = document.getElementById("resultPointTitle");
+const resultPointText = document.getElementById("resultPointText");
+
+// 犬種ごとの結果画面に表示する内容
+const resultData = {
+    shiba: {
+        img: "dog-images/shibainu.jpg",
+        title: "主導権は我にあり、マイペース王",
+        subtitle: "あなたは柴犬タイプ。",
+        description: "周りに流されず、自分のペースを大切にするタイプです。基本気分屋で相手から来られるより、自分から行くのを好み、一人の時間は好きだけど、本当のひとりぼっちは少し寂しい。そんな天邪鬼な一面を持っています。でも信頼した相手にはかなり一途です。",
+        pointTitle: "ちなみに本物の柴犬は、",
+        pointText: "換毛期になると分身ができるレベルで毛が抜けます。掃除機との戦いが始まる季節とも言われています。"
+    },
+    husky: {
+        img: "dog-images/husky.jpg",
+        title: "中身はおしゃべりおばさん、好奇心モンスター",
+        subtitle: "あなたはハスキータイプ。",
+        description: "好奇心旺盛で、新しいことや面白そうなことに目がありません。考えるより先に行動することも多く、周囲からは自由人と思われることも。感情表現が豊かで、じっとしているより何かしている方が好きなタイプです。興味を持ったことには一直線に向かっていきます。",
+        pointTitle: "ちなみに本物のハスキーは、",
+        pointText: "嬉しいと文句を言うようにしゃべります。飼い主との会話量なら、もしかすると人間以上かもしれません。"
+    },
+    pome: {
+        img: "dog-images/pome.jpg",
+        title: "警戒心はSP級、小さき気高い番長",
+        subtitle: "あなたはポメラニアンタイプ。",
+        description: "初対面では少し警戒心が強いものの、負けず嫌いで芯の強さを持っています。周囲からは近寄りがたく見られることもありますが、実は人一倍まわりをよく見ているタイプです。一度心を開いた相手にはとても情が深く、距離がバグることもあります。",
+        pointTitle: "ちなみに本物のポメラニアンは、",
+        pointText: "体は小さくても大型犬に本気で立ち向かう勇敢さがあります。自分のことを大型犬だと思っている説もあります。"
+    },
+    toypoo: {
+        img: "dog-images/toypoodle.jpg",
+        title: "気づけば懐に入り込む、みんなのアイドル",
+        subtitle: "あなたはトイプードルタイプ。",
+        description: "人との距離を縮めるのが上手で、自然と周りから可愛がられるタイプです。寂しがり屋で一人より誰かと一緒に過ごすのを好みます。自分磨きが得意で、「どう見られたら魅力的か」を無意識に理解しています。",
+        pointTitle: "ちなみに本物のトイプードルは、",
+        pointText: "犬の中でもトップクラスの知能を持っています。賢すぎるあまり、飼い主の行動パターンを先読みしてストーカーまがいになることもあるそうです。"
+    },
+    golden: {
+        img: "dog-images/labrador.jpg",
+        title: "放っておけない症候群、優しさの押し売り名人係",
+        subtitle: "あなたはゴールデンレトリバータイプ。",
+        description: "人とのつながりを大切にし、困っている人を見ると放っておけないタイプです。頼られるとつい頑張ってしまい、気付けば周囲のお世話役になっていることも。自分のことより相手を優先してしまう、優しさの塊です。",
+        pointTitle: "ちなみに本物のゴールデンレトリバーは、",
+        pointText: "飼い主が帰ってくると尻尾を揺さぶり何かしら咥えてプレゼントするそうです。尻尾の勢いが良すぎて、悪気なくモノを破壊してしまうことも。"
+    }
+};
+
+// 同点時は柴犬 > ハスキー > ポメラニアン > トイプードル > ゴールデンレトリバーの優先順位で判定
+const typePriority = ["shiba", "husky", "pome", "toypoo", "golden"];
+
+function determineResult() {
+    let winner = typePriority[0];
+    let maxScore = -1;
+
+    for (const type of typePriority) {
+        if (scores[type] > maxScore) {
+            maxScore = scores[type];
+            winner = type;
+        }
+    }
+
+    return winner;
+}
+
 let currentQuestionIndex = 0;
 
 // 犬種ごとの得点を入れておく箱(最初は全部0点)
@@ -250,6 +318,16 @@ function finishQuiz() {
 function showResultScreen() {
     loadingScreen.style.display = "none";
     resultScreen.style.display = "block";
+
+    const winner = determineResult();
+    const data = resultData[winner];
+
+    resultDogImg.src = data.img;
+    resultTitle.textContent = data.title;
+    resultSubtitle.textContent = data.subtitle;
+    resultDescription.textContent = data.description;
+    resultPointTitle.textContent = data.pointTitle;
+    resultPointText.textContent = data.pointText;
 }
 
 yesBtn.addEventListener("click", function() {
