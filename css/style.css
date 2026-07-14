@@ -22,6 +22,12 @@ body{
 .start-btn-wrap{
     position: relative;
     display: inline-block;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.start-btn-wrap:active{
+    transform: translateY(5px);
 }
 
 .start-text{
@@ -64,6 +70,7 @@ body{
     width: 4%;
     height: 100%;
     background-color: #F6C65B;
+    transition: width 0.3s ease;
 }
 
 .question-decoration-img{

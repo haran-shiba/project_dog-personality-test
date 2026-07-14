@@ -194,6 +194,7 @@ point:2
 
 const questionText = document.getElementById("questionText");
 const questionCount = document.getElementById("questionCount");
+const progressBar = document.querySelector(".progress");
 const yesBtn = document.getElementById("yes-btn");
 const noBtn = document.getElementById("no-btn");
 
@@ -215,6 +216,9 @@ function showQuestion() {
 
     questionCount.textContent =
         `Q${currentQuestion.id} / ${questions.length}`;
+
+    progressBar.style.width =
+        `${(currentQuestion.id / questions.length) * 100}%`;
 }
 
 // 今表示している質問の犬種(type)に、その質問のポイント(point)を加算する
