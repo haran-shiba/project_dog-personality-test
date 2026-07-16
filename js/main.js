@@ -387,9 +387,43 @@ shareBtn.addEventListener("click", function() {
     }
 });
 
-// 結果を保存する：result-mainをキャプチャして画像として保存
+// 結果を保存する：ボタンを含まないA4横サイズのレイアウトを作って画像として保存
 saveBtn.addEventListener("click", function() {
-    html2canvas(document.querySelector(".result-main")).then(function(canvas) {
+    const winner = determineResult();
+    const data = resultData[winner];
+
+    const capture = document.createElement("div");
+    capture.className = "export-capture";
+    capture.innerHTML = `
+        <div class="export-main">
+            <div class="export-dog-img">
+                <img src="${data.img}" alt="">
+            </div>
+            <div class="export-content">
+                <div class="export-title">
+                    <img src="dog-images/kekkatitle-icon.svg" alt="">
+                    <h1>${data.title}</h1>
+                </div>
+                <div class="export-text">
+                    <img src="dog-images/kekkaTEXT frame.svg" class="export-text-frame" alt="">
+                    <div class="export-text-content">
+                        <h3>${data.subtitle}</h3>
+                        <p>${data.description}</p>
+                    </div>
+                </div>
+                <div class="export-point">
+                    <h3>${data.pointTitle}</h3>
+                    <div class="export-point-box">
+                        <img src="dog-images/Rectangle 26.png" alt="">
+                        <p>${data.pointText}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(capture);
+
+    html2canvas(capture, { scale: 2 }).then(function(canvas) {
         const link = document.createElement("a");
         link.download = "dog-result.png";
         link.href = canvas.toDataURL("image/png");
@@ -399,6 +433,8 @@ saveBtn.addEventListener("click", function() {
     }).catch(function(error) {
         console.error(error);
         alert("画像の保存に失敗しました");
+    }).finally(function() {
+        document.body.removeChild(capture);
     });
 });
 
