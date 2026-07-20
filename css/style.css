@@ -2,6 +2,11 @@ body{
     margin:0;
 }
 
+img{
+    max-width: 100%;
+    height: auto;
+}
+
 /* 共通 */
 .screen{
     min-height:100vh;
@@ -102,6 +107,9 @@ body{
     background: none;
     padding: 0;
     cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    color: inherit;
 }
 
 .answer-btn:active{
@@ -253,12 +261,15 @@ body{
 .result-point-box{
     position: relative;
     width: 100%;
+    min-height: 50px;
 }
 
 .result-point-box img{
     display: block;
     width: 100%;
-    height:auto;
+    height: 100%;
+    min-height: 50px;
+    object-fit: fill;
 }
 
 .result-point-box p{
@@ -297,6 +308,9 @@ body{
     font-size:13px;
     cursor: pointer;
     transition: transform 0.1s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    color: inherit;
 }
 
 .result-btn:active{
@@ -511,6 +525,14 @@ body{
         width: 80px;
         right: 20px;
         bottom: 20px;
+    }
+
+    .result-point-box {
+        min-height: 80px;
+    }
+
+    .result-point-box img {
+        min-height: 80px;
     }
 }
 
