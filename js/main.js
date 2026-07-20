@@ -5,198 +5,6 @@ const loadingScreen = document.getElementById("loading-screen");
 const resultScreen = document.getElementById("result-screen");
 const startButton = document.getElementById("start-btn");
 
-startButton.addEventListener("click", function(){
-    topScreen.style.display = "none";
-    questionScreen.style.display = "flex";
-});
-// PHP APIが使えなかった時のための予備データ(今まで通りの質問データ)
-const fallbackQuestions = [
-// ===== 1周目(Q1～Q5) =====
-//Q1  shiba
-{
-id:1,
-text:"連絡が来ても、返事は気分次第だ",
-type:"shiba",
-point:1
-},
-//Q2  husky
-{
-id:2,
-text:"沈黙が続くと何か話したくなる",
-type:"husky",
-point:1
-},
-//Q3  pome
-{
-id:3,
-text:"人見知りだが仲良くなると急に距離が近くなる",
-type:"pome",
-point:1
-},
-//Q4  toypoo
-{
-id:4,
-text:"実はストーカー気質な部分がある",
-type:"toypoo",
-point:1
-},
-//Q5  golden
-{
-id:5,
-text:"初対面でも割とすぐ打ち解けられる",
-type:"golden",
-point:1
-},
-// ===== 2周目(Q6～Q10) =====
-//Q6  shiba
-{
-id:6,
-text:"気分じゃない時はテコでも動かない",
-type:"shiba",
-point:1
-},
-//Q7  husky
-{
-id:7,
-text:"「面白そう」が行動理由の上位に入る",
-type:"husky",
-point:1
-},
-//Q8  pome
-{
-id:8,
-text:"高嶺の花と言われたことがある",
-type:"pome",
-point:1
-},
-//Q9  toypoo
-{
-id:9,
-text:"写真映りが良いと言われがち",
-type:"toypoo",
-point:1
-},
-//Q10  golden
-{
-id:10,
-text:"お土産や手土産を渡すのが好きだ",
-type:"golden",
-point:1
-},
-// ===== 3周目(Q11～Q15) =====
-//Q11  shiba
-{
-id:11,
-text:"誰かと寝るより一人で自由に寝るのが好き",
-type:"shiba",
-point:1
-},
-//Q12  husky
-{
-id:12,
-text:"おっちょこちょいと言われがち",
-type:"husky",
-point:1
-},
-//Q13  pome
-{
-id:13,
-text:"怖くても態度には出ない方だ",
-type:"pome",
-point:1
-},
-//Q14  toypoo
-{
-id:14,
-text:"一人より誰かと一緒に過ごす時間が好きだ",
-type:"toypoo",
-point:1
-},
-//Q15  golden
-{
-id:15,
-text:"頼られると断れないタイプだ",
-type:"golden",
-point:1
-},
-// ===== 4周目(Q16～Q20) =====
-//Q16  shiba
-{
-id:16,
-text:"人より匂いに敏感な方だ",
-type:"shiba",
-point:1
-},
-//Q17  husky
-{
-id:17,
-text:"気になったことはとりあえず試してみたくなる",
-type:"husky",
-point:1
-},
-//Q18  pome
-{
-id:18,
-text:"意外と負けず嫌い",
-type:"pome",
-point:1
-},
-//Q19  toypoo
-{
-id:19,
-text:"自分磨きにはついお金を使ってしまう",
-type:"toypoo",
-point:1
-},
-//Q20  golden
-{
-id:20,
-text:"自分から人を嫌いになることはまずない",
-type:"golden",
-point:1
-},
-// ===== 5周目(Q21～Q25) =====
-//Q21  shiba
-{
-id:21,
-text:"言葉で説明するより態度で察してほしい時がある",
-type:"shiba",
-point:2
-},
-//Q22  husky
-{
-id:22,
-text:"見た目と中身のギャップが激しいと言われる",
-type:"husky",
-point:2
-},
-//Q23  pome
-{
-id:23,
-text:"初対面では自然と猫をかぶってしまう",
-type:"pome",
-point:2
-},
-//Q24  toypoo
-{
-id:24,
-text:"世渡り上手な方だ",
-type:"toypoo",
-point:2
-},
-//Q25  golden
-{
-id:25,
-text:"あまり怒らない方だ",
-type:"golden",
-point:2
-}
-];
-
-// 実際に画面表示・採点に使う質問データ
-// 最初は予備データを入れておき、PHP APIの取得に成功したら中身を差し替える
-let questions = fallbackQuestions;
-
 const questionText = document.getElementById("questionText");
 const questionCount = document.getElementById("questionCount");
 const progressBar = document.querySelector(".progress");
@@ -259,64 +67,56 @@ const resultData = {
     }
 };
 
-// 同点時は柴犬 > ハスキー > ポメラニアン > トイプードル > ゴールデンレトリバーの優先順位で判定
-const typePriority = ["shiba", "husky", "pome", "toypoo", "golden"];
+// 直近で確定した診断結果(犬種キー)。結果画面の表示や画像保存で使う
+// 採点そのものはPHP側(api/answer.php)が行い、フロントエンドは結果のキーだけを受け取る
+let currentResultType = null;
 
-function determineResult() {
-    let winner = typePriority[0];
-    let maxScore = -1;
-
-    for (const type of typePriority) {
-        if (scores[type] > maxScore) {
-            maxScore = scores[type];
-            winner = type;
-        }
-    }
-
-    return winner;
-}
-
-let currentQuestionIndex = 0;
-
-// 犬種ごとの得点を入れておく箱(最初は全部0点)
-const scores = {
-    shiba: 0,
-    husky: 0,
-    pome: 0,
-    toypoo: 0,
-    golden: 0
-};
-
-function showQuestion() {
-    const currentQuestion = questions[currentQuestionIndex];
-
-    // 質問データはシャッフルされてidの順番通りではなくなるため、
-    // 「配列の何番目を表示しているか(currentQuestionIndex)」を基準にする
-    const currentPosition = currentQuestionIndex + 1;
-
-    questionText.textContent = currentQuestion.text;
+// 質問文と進捗をまとめて画面に反映する
+function renderQuestion(question, questionNumber, totalQuestions) {
+    questionText.textContent = question.text;
 
     questionCount.textContent =
-        `Q${currentPosition} / ${questions.length}`;
+        `Q${questionNumber} / ${totalQuestions}`;
 
     progressBar.style.width =
-        `${(currentPosition / questions.length) * 100}%`;
+        `${(questionNumber / totalQuestions) * 100}%`;
 }
 
-// 今表示している質問の犬種(type)に、その質問のポイント(point)を加算する
-function addScore() {
-    const currentQuestion = questions[currentQuestionIndex];
-    scores[currentQuestion.type] += currentQuestion.point;
+// 診断セッションを開始し、1問目を取得して画面に反映する(この時点では画面はまだ切り替えない)
+function fetchFirstQuestion() {
+    $.getJSON("api/start.php")
+        .done(function(data) {
+            renderQuestion(data.question, data.questionNumber, data.totalQuestions);
+        })
+        .fail(function() {
+            questionText.textContent = "問題を読み込めませんでした。PHPが動作する環境で開いているかご確認ください。";
+        });
 }
 
-function nextQuestion() {
-    currentQuestionIndex++;
+// ページ読み込み時に1問目を先読みしておく(スタートボタンを押した瞬間に表示できるように)
+fetchFirstQuestion();
 
-    if (currentQuestionIndex < questions.length) {
-        showQuestion();
-    } else {
-        finishQuiz();
-    }
+// 回答を1件送信する：採点・進行管理はPHP側(api/answer.php)が行い、
+// 「次の質問」または「最終結果」のどちらかが返ってくる
+function submitAnswer(answer) {
+    $.ajax({
+        url: "api/answer.php",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ answer: answer }),
+        dataType: "json"
+    })
+        .done(function(data) {
+            if (data.finished) {
+                currentResultType = data.result;
+                finishQuiz();
+            } else {
+                renderQuestion(data.question, data.questionNumber, data.totalQuestions);
+            }
+        })
+        .fail(function() {
+            alert("回答の送信に失敗しました。もう一度お試しください。");
+        });
 }
 
 // 質問が全部終わったら、質問画面を隠してローディング画面を表示する
@@ -348,8 +148,7 @@ function showResultScreen() {
     loadingScreen.style.display = "none";
     resultScreen.style.display = "flex";
 
-    const winner = determineResult();
-    const data = resultData[winner];
+    const data = resultData[currentResultType];
 
     resultDogImg.src = data.img;
     resultTitle.textContent = data.title;
@@ -359,25 +158,24 @@ function showResultScreen() {
     resultPointText.textContent = data.pointText;
 }
 
+startButton.addEventListener("click", function() {
+    topScreen.style.display = "none";
+    questionScreen.style.display = "flex";
+});
+
 yesBtn.addEventListener("click", function() {
-    addScore();
-    nextQuestion();
+    submitAnswer("yes");
 });
 
 noBtn.addEventListener("click", function() {
-    nextQuestion();
+    submitAnswer("no");
 });
 
-// もう一度診断する：状態をリセットしてTOP画面に戻る
+// もう一度診断する：TOP画面に戻り、次回のスタートに備えて新しいセッションを先読みする
 retryBtn.addEventListener("click", function() {
-    currentQuestionIndex = 0;
-    for (const type in scores) {
-        scores[type] = 0;
-    }
-    showQuestion();
-
     resultScreen.style.display = "none";
     topScreen.style.display = "flex";
+    fetchFirstQuestion();
 });
 
 // シェアする：Web Share APIで診断結果タイトルとURLを共有、非対応ブラウザではURLをコピー
@@ -398,8 +196,7 @@ shareBtn.addEventListener("click", function() {
 
 // 結果を保存する：ボタンを含まないA4横サイズのレイアウトを作って画像として保存
 saveBtn.addEventListener("click", function() {
-    const winner = determineResult();
-    const data = resultData[winner];
+    const data = resultData[currentResultType];
 
     const capture = document.createElement("div");
     capture.className = "export-capture";
@@ -464,19 +261,3 @@ saveBtn.addEventListener("click", function() {
         document.body.removeChild(capture);
     });
 });
-
-// PHP API(api/questions.php)から質問データの取得を試みる
-// ・成功した場合 → シャッフル済みの質問データに差し替える(ローカルでPHPを動かした時)
-// ・失敗した場合 → 何もせず、最初から入っている予備データ(fallbackQuestions)を使う(Netlify本番など)
-$.getJSON("api/questions.php")
-    .done(function(data) {
-        console.log("PHP APIから質問データを取得しました");
-        questions = data;
-    })
-    .fail(function() {
-        console.log("PHP APIが使えないため、予備データを使用します");
-    })
-    .always(function() {
-        // 取得できてもできなくても、最終的に決まった質問データで1問目を表示する
-        showQuestion();
-    });
