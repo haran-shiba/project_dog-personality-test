@@ -216,6 +216,9 @@ img{
 
 .result-title img{
     width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    object-fit: contain;
 }
 
 .result-text{
@@ -383,6 +386,9 @@ img{
 
 .export-title img{
     width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    object-fit: contain;
 }
 
 .export-title h1{
@@ -479,6 +485,17 @@ img{
     .result-content {
         width: 100%;
         max-width: 100%;
+    }
+
+    /* フレーム画像はアスペクト比固定で薄くなりがちなため、最低限の高さを確保して文字がはみ出さないようにする */
+    .result-text {
+        min-height: 190px;
+    }
+
+    .result-text-frame {
+        height: 100%;
+        min-height: 190px;
+        object-fit: cover;
     }
 
     .result-btns {
