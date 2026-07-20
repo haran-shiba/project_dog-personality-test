@@ -410,7 +410,7 @@ saveBtn.addEventListener("click", function() {
             </div>
             <div class="export-content">
                 <div class="export-title">
-                    <img src="dog-images/kekkatitle-icon.svg" alt="">
+                    <img src="dog-images/kekkatitle-icon-export.png" alt="">
                     <h1>${data.title}</h1>
                 </div>
                 <div class="export-text">
