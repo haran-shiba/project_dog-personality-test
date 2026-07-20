@@ -9,7 +9,8 @@ startButton.addEventListener("click", function(){
     topScreen.style.display = "none";
     questionScreen.style.display = "flex";
 });
-const questions = [
+// PHP APIが使えなかった時のための予備データ(今まで通りの質問データ)
+const fallbackQuestions = [
 // ===== 1周目(Q1～Q5) =====
 //Q1  shiba
 {
@@ -192,6 +193,10 @@ point:2
 }
 ];
 
+// 実際に画面表示・採点に使う質問データ
+// 最初は予備データを入れておき、PHP APIの取得に成功したら中身を差し替える
+let questions = fallbackQuestions;
+
 const questionText = document.getElementById("questionText");
 const questionCount = document.getElementById("questionCount");
 const progressBar = document.querySelector(".progress");
@@ -285,13 +290,17 @@ const scores = {
 function showQuestion() {
     const currentQuestion = questions[currentQuestionIndex];
 
+    // 質問データはシャッフルされてidの順番通りではなくなるため、
+    // 「配列の何番目を表示しているか(currentQuestionIndex)」を基準にする
+    const currentPosition = currentQuestionIndex + 1;
+
     questionText.textContent = currentQuestion.text;
 
     questionCount.textContent =
-        `Q${currentQuestion.id} / ${questions.length}`;
+        `Q${currentPosition} / ${questions.length}`;
 
     progressBar.style.width =
-        `${(currentQuestion.id / questions.length) * 100}%`;
+        `${(currentPosition / questions.length) * 100}%`;
 }
 
 // 今表示している質問の犬種(type)に、その質問のポイント(point)を加算する
@@ -424,12 +433,30 @@ saveBtn.addEventListener("click", function() {
     document.body.appendChild(capture);
 
     html2canvas(capture, { scale: 2 }).then(function(canvas) {
-        const link = document.createElement("a");
-        link.download = "dog-result.png";
-        link.href = canvas.toDataURL("image/png");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        canvas.toBlob(function(blob) {
+            const file = new File([blob], "dog-result.png", { type: "image/png" });
+
+            // iOS(Safari)は「download属性」でのファイル保存に対応していないため、
+            // 共有シート経由で「画像を保存」してもらう(PC・AndroidはダウンロードでOKなので対象外)
+            const isIOS = /iP(hone|od|ad)/.test(navigator.platform) ||
+                (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
+            if (isIOS && navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: "あなたをわんこに例えると？",
+                }).catch(function() {});
+            } else {
+                // PC・Androidなど：従来通りファイルとして自動ダウンロード
+                const link = document.createElement("a");
+                link.download = "dog-result.png";
+                link.href = URL.createObjectURL(blob);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+            }
+        }, "image/png");
     }).catch(function(error) {
         console.error(error);
         alert("画像の保存に失敗しました");
@@ -438,4 +465,18 @@ saveBtn.addEventListener("click", function() {
     });
 });
 
-showQuestion();
+// PHP API(api/questions.php)から質問データの取得を試みる
+// ・成功した場合 → シャッフル済みの質問データに差し替える(ローカルでPHPを動かした時)
+// ・失敗した場合 → 何もせず、最初から入っている予備データ(fallbackQuestions)を使う(Netlify本番など)
+$.getJSON("api/questions.php")
+    .done(function(data) {
+        console.log("PHP APIから質問データを取得しました");
+        questions = data;
+    })
+    .fail(function() {
+        console.log("PHP APIが使えないため、予備データを使用します");
+    })
+    .always(function() {
+        // 取得できてもできなくても、最終的に決まった質問データで1問目を表示する
+        showQuestion();
+    });
